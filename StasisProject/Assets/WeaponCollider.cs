@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class WeaponCollider : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnTriggerEnter(Collider collision)
     {
-        
+        if (collision.TryGetComponent<StasisCollision>(out StasisCollision collisionScript))
+        {
+            ProcessHitPoint(collisionScript);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ProcessHitPoint(StasisCollision collisionScript)
     {
-        
+        collisionScript.HitStasisObject(Vector3.zero); //Placeholder Vector for now
     }
 }
