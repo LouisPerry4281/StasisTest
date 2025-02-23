@@ -1,4 +1,5 @@
-﻿ using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -86,6 +87,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private bool isAttacking = false;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -135,7 +137,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -156,8 +158,19 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
+            if (!isAttacking && Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                StartCoroutine(Attack());
+            }
+
             JumpAndGravity();
             GroundedCheck();
+
+            if (isAttacking)
+            {
+                return;
+            }
+
             Move();
         }
 
@@ -277,6 +290,19 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
+        }
+
+        private IEnumerator Attack()
+        {
+            isAttacking = true;
+            _animator.applyRootMotion = true;
+
+            _animator.Play("Attack1");
+
+            yield return new WaitForSeconds(1.08f);
+
+            _animator.applyRootMotion = false;
+            isAttacking = false;
         }
 
         private void JumpAndGravity()
