@@ -5,7 +5,13 @@ public class StasisCollision : MonoBehaviour
 {
     private Rigidbody rb;
 
-    [SerializeField] private float launchForce;
+    [SerializeField] private float baseLaunchForce;
+    private float potentialLaunchForce = 0;
+
+    [SerializeField] private float stasisTime;
+
+    Vector3 directionToLaunch;
+    Vector3 stasisPositionHit;
 
     public bool isInStasis = false;
 
@@ -14,16 +20,23 @@ public class StasisCollision : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void HitStasisObject(Vector3 positionHit)
+    public void HitStasisObject(Vector3 positionHit, float forceOfHit)
     {
-        Vector3 directionToLaunch = transform.position - positionHit;
+        directionToLaunch = transform.position - positionHit;
 
-        LaunchObject(directionToLaunch, positionHit);
+        if (isInStasis)
+        {
+            potentialLaunchForce += forceOfHit;
+            stasisPositionHit = positionHit;
+            return;
+        }
+
+        LaunchObject(directionToLaunch, positionHit, baseLaunchForce);
     }
 
-    private void LaunchObject(Vector3 directionToLaunch, Vector3 positionToHit)
+    private void LaunchObject(Vector3 direction, Vector3 positionToHit, float force)
     {
-        rb.AddForceAtPosition(directionToLaunch * launchForce, positionToHit);
+        rb.AddForceAtPosition(direction * force, positionToHit);
     }
 
     public IEnumerator FreezeObject()
@@ -32,12 +45,14 @@ public class StasisCollision : MonoBehaviour
 
         isInStasis = true;
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(stasisTime);
 
         isInStasis = false;
 
         rb.isKinematic = false;
 
-        //launch object
+        float finalLaunchForce = baseLaunchForce * potentialLaunchForce;
+
+        LaunchObject(directionToLaunch, stasisPositionHit, finalLaunchForce);
     }
 }

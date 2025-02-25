@@ -5,6 +5,8 @@ public class WeaponCollider : MonoBehaviour
     [SerializeField] Transform testObject;
     [SerializeField] Transform rayPivot;
 
+    [SerializeField] float weaponForce = 1;
+
     [SerializeField] LayerMask sphereLayer;
 
     void OnTriggerEnter(Collider collision)
@@ -25,6 +27,8 @@ public class WeaponCollider : MonoBehaviour
 
         testObject.position = hit.point;
 
-        collisionScript.HitStasisObject(hit.point);
+        gameObject.GetComponent<Collider>().enabled = false;
+
+        collisionScript.HitStasisObject(hit.point, weaponForce);
     }
 }

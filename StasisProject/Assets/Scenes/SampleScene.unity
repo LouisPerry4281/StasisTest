@@ -486,6 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testObject: {fileID: 1159875394}
   rayPivot: {fileID: 2115189952}
+  weaponForce: 1
   sphereLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -661,7 +662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c989868eb3114c869cb3635d8712dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stasisMode: 1
+  stasisMode: 0
   stasisLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -713,7 +714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e785b788369d14dd78aaa70788041a02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchForce: 100
+  baseLaunchForce: 100
+  stasisTime: 10
+  isInStasis: 0
 --- !u!54 &1998551521
 Rigidbody:
   m_ObjectHideFlags: 0
