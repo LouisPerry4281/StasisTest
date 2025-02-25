@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class StasisCollision : MonoBehaviour
@@ -5,6 +6,8 @@ public class StasisCollision : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField] private float launchForce;
+
+    public bool isInStasis = false;
 
     void Start()
     {
@@ -21,5 +24,20 @@ public class StasisCollision : MonoBehaviour
     private void LaunchObject(Vector3 directionToLaunch, Vector3 positionToHit)
     {
         rb.AddForceAtPosition(directionToLaunch * launchForce, positionToHit);
+    }
+
+    public IEnumerator FreezeObject()
+    {
+        rb.isKinematic = true;
+
+        isInStasis = true;
+
+        yield return new WaitForSeconds(3);
+
+        isInStasis = false;
+
+        rb.isKinematic = false;
+
+        //launch object
     }
 }

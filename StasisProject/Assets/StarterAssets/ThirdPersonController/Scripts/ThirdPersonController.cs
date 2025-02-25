@@ -107,6 +107,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private StasisManager stasisManager;
 
         private const float _threshold = 0.01f;
 
@@ -152,13 +153,14 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            stasisManager = FindFirstObjectByType<StasisManager>();
         }
 
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            if (!isAttacking && Input.GetKeyDown(KeyCode.Mouse0))
+            if (!isAttacking && Input.GetKeyDown(KeyCode.Mouse0) && !stasisManager.stasisMode)
             {
                 StartCoroutine(Attack());
             }

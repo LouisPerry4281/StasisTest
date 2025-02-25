@@ -8,6 +8,8 @@ public class StasisManager : MonoBehaviour
 
     [SerializeField] LayerMask stasisLayer;
 
+    StasisCollision highlightedObject = null;
+
     void Start()
     {
         cam = Camera.main;
@@ -15,9 +17,20 @@ public class StasisManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            highlightedObject = null;
+            stasisMode = !stasisMode;
+        }
+
         if (stasisMode)
         {
             CastRay();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && highlightedObject != null && !highlightedObject.isInStasis)
+        {
+            StartCoroutine(highlightedObject.FreezeObject());
         }
     }
 
@@ -28,7 +41,13 @@ public class StasisManager : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, rayDirection, out hit, Mathf.Infinity, stasisLayer))
         {
-            if ()
+            print("hit");
+            highlightedObject = hit.collider.gameObject.GetComponent<StasisCollision>();
+        }
+        else
+        {
+            print("Not hit");
+            highlightedObject = null;
         }
     }
 }
