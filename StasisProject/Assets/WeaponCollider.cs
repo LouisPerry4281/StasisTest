@@ -2,12 +2,26 @@ using UnityEngine;
 
 public class WeaponCollider : MonoBehaviour
 {
+    private BoxCollider boxCollider;
+
     [SerializeField] Transform testObject;
     [SerializeField] Transform rayPivot;
 
     [SerializeField] float weaponForce = 1;
 
     [SerializeField] LayerMask sphereLayer;
+
+    private bool isColliding = false;
+
+    void Start()
+    {
+        boxCollider = GetComponent<BoxCollider>();
+    }
+
+    void LateUpdate()
+    {
+        isColliding = false;
+    }
 
     void OnTriggerEnter(Collider collision)
     {
@@ -19,6 +33,9 @@ public class WeaponCollider : MonoBehaviour
 
     private void ProcessHitPoint(StasisCollision collisionScript)
     {
+        if (isColliding)
+            return;
+
         Vector3 rayDirection = collisionScript.gameObject.transform.position - rayPivot.position;
         Vector3 rayStartPoint = rayPivot.position - (rayDirection * 4);
 
@@ -27,7 +44,8 @@ public class WeaponCollider : MonoBehaviour
 
         testObject.position = hit.point;
 
-        gameObject.GetComponent<Collider>().enabled = false;
+        boxCollider.enabled = false;
+        isColliding = true;
 
         collisionScript.HitStasisObject(hit.point, weaponForce);
     }

@@ -36,6 +36,7 @@ public class StasisCollision : MonoBehaviour
 
     private void LaunchObject(Vector3 direction, Vector3 positionToHit, float force)
     {
+        print(force);
         rb.AddForceAtPosition(direction * force, positionToHit);
     }
 
