@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e785b788369d14dd78aaa70788041a02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseLaunchForce: 20
+  baseLaunchForce: 100
   stasisTime: 10
   isInStasis: 0
 --- !u!54 &1998551521
@@ -788,7 +788,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
+  - {fileID: 2100000, guid: b77b0af18858c48b7a989e8a59797612, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

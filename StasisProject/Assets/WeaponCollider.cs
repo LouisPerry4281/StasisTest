@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class WeaponCollider : MonoBehaviour
@@ -18,9 +19,11 @@ public class WeaponCollider : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
     }
 
-    void LateUpdate()
+    IEnumerator ResetHit()
     {
+        yield return new WaitForSeconds(1);
         isColliding = false;
+        yield return null;
     }
 
     void OnTriggerEnter(Collider collision)
@@ -48,5 +51,7 @@ public class WeaponCollider : MonoBehaviour
         isColliding = true;
 
         collisionScript.HitStasisObject(hit.point, weaponForce);
+
+        StartCoroutine(ResetHit());
     }
 }
