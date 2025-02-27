@@ -484,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034650ba306744791a522c7bfb277d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffectPrefab: {fileID: 120221903997307259, guid: 1190becb900674562a0e4a332406a810, type: 3}
   testObject: {fileID: 1159875394}
   rayPivot: {fileID: 2115189952}
   weaponForce: 1
@@ -612,7 +613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1859890373
 Transform:
   m_ObjectHideFlags: 0
