@@ -718,6 +718,7 @@ MonoBehaviour:
   baseLaunchForce: 100
   stasisTime: 10
   isInStasis: 0
+  material: {fileID: 2100000, guid: b77b0af18858c48b7a989e8a59797612, type: 2}
 --- !u!54 &1998551521
 Rigidbody:
   m_ObjectHideFlags: 0

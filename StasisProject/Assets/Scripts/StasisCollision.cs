@@ -15,6 +15,13 @@ public class StasisCollision : MonoBehaviour
 
     public bool isInStasis = false;
 
+    [SerializeField] private Material material;
+
+    void Awake()
+    {
+        material.SetFloat("_PowerAmount", 0);
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,6 +35,8 @@ public class StasisCollision : MonoBehaviour
         {
             potentialLaunchForce += forceOfHit;
             stasisPositionHit = positionHit;
+
+            material.SetFloat("_PowerAmount", Mathf.Clamp(material.GetFloat("_PowerAmount") + 0.2f, 0f, 1f));
             return;
         }
 
@@ -51,6 +60,8 @@ public class StasisCollision : MonoBehaviour
         isInStasis = false;
 
         rb.isKinematic = false;
+
+        material.SetFloat("_PowerAmount", 0);
 
         float finalLaunchForce = baseLaunchForce * potentialLaunchForce;
 
