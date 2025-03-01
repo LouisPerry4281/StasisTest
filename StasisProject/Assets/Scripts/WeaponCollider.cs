@@ -8,7 +8,6 @@ public class WeaponCollider : MonoBehaviour
 
     [SerializeField] GameObject hitEffectPrefab;
 
-    [SerializeField] Transform testObject;
     [SerializeField] Transform rayPivot;
 
     [SerializeField] float weaponForce = 1;
@@ -47,8 +46,6 @@ public class WeaponCollider : MonoBehaviour
 
         RaycastHit hit;
         Physics.Raycast(rayStartPoint, rayDirection, out hit, Mathf.Infinity, sphereLayer);
-
-        testObject.position = hit.point;
 
         GameObject hitEffectInstance = Instantiate(hitEffectPrefab, hit.point, quaternion.identity);
         hitEffectInstance.transform.rotation = Quaternion.LookRotation(-rayDirection);

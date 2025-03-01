@@ -41,7 +41,6 @@ public class StasisManager : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, rayDirection, out hit, Mathf.Infinity, stasisLayer))
         {
-            print("hit");
             highlightedObject = hit.collider.gameObject.GetComponent<StasisCollision>();
         }
         else

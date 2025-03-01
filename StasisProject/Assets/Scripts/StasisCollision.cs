@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class StasisCollision : MonoBehaviour
@@ -16,6 +17,9 @@ public class StasisCollision : MonoBehaviour
     public bool isInStasis = false;
 
     [SerializeField] private Material material;
+
+    [SerializeField] private GameObject directionIndicatorPrefab;
+    private DirectionIndicator directionIndicator;
 
     void Awake()
     {
@@ -35,6 +39,15 @@ public class StasisCollision : MonoBehaviour
         {
             potentialLaunchForce += forceOfHit;
             stasisPositionHit = positionHit;
+
+            if (directionIndicator == null)
+            {
+                print("spawn");
+                directionIndicator = Instantiate(directionIndicatorPrefab, transform.position, quaternion.identity).GetComponent<DirectionIndicator>();
+                print(directionIndicator);
+            }
+
+            directionIndicator.SetDirection(transform.position, directionToLaunch);
 
             material.SetFloat("_PowerAmount", Mathf.Clamp(material.GetFloat("_PowerAmount") + 0.2f, 0f, 1f));
             return;
