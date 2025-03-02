@@ -45,7 +45,6 @@ public class StasisManager : MonoBehaviour
         }
         else
         {
-            print("Not hit");
             highlightedObject = null;
         }
     }

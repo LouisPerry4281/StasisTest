@@ -12,6 +12,7 @@ public class StasisCollision : MonoBehaviour
     [SerializeField] private float stasisTime;
 
     [SerializeField] private ParticleSystem chainParticles;
+    [SerializeField] private ParticleSystem energyAbsorbParticles;
 
     Vector3 directionToLaunch;
     Vector3 stasisPositionHit;
@@ -73,6 +74,7 @@ public class StasisCollision : MonoBehaviour
         meshRenderer.material = emissiveMaterial;
 
         chainParticles.Play();
+        energyAbsorbParticles.Play();
 
         yield return new WaitForSeconds(stasisTime);
 
@@ -80,7 +82,8 @@ public class StasisCollision : MonoBehaviour
 
         rb.isKinematic = false;
 
-        Destroy(directionIndicator.gameObject);
+        if (directionIndicator != null)
+            Destroy(directionIndicator.gameObject);
 
         meshRenderer.material = baseMaterial;
 
