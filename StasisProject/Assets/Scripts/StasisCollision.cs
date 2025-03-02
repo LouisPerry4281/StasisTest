@@ -11,24 +11,29 @@ public class StasisCollision : MonoBehaviour
 
     [SerializeField] private float stasisTime;
 
+    [SerializeField] private ParticleSystem chainParticles;
+
     Vector3 directionToLaunch;
     Vector3 stasisPositionHit;
 
     public bool isInStasis = false;
 
-    [SerializeField] private Material material;
+    private MeshRenderer meshRenderer;
+    [SerializeField] private Material emissiveMaterial;
+    [SerializeField] private Material baseMaterial;
 
     [SerializeField] private GameObject directionIndicatorPrefab;
     private DirectionIndicator directionIndicator;
 
     void Awake()
     {
-        material.SetFloat("_PowerAmount", 0);
+        emissiveMaterial.SetFloat("_PowerAmount", 0);
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void HitStasisObject(Vector3 positionHit, float forceOfHit)
@@ -42,14 +47,12 @@ public class StasisCollision : MonoBehaviour
 
             if (directionIndicator == null)
             {
-                print("spawn");
                 directionIndicator = Instantiate(directionIndicatorPrefab, transform.position, quaternion.identity).GetComponent<DirectionIndicator>();
-                print(directionIndicator);
             }
 
             directionIndicator.SetDirection(transform.position, directionToLaunch);
 
-            material.SetFloat("_PowerAmount", Mathf.Clamp(material.GetFloat("_PowerAmount") + 0.2f, 0f, 1f));
+            emissiveMaterial.SetFloat("_PowerAmount", Mathf.Clamp(emissiveMaterial.GetFloat("_PowerAmount") + 0.2f, 0f, 1f));
             return;
         }
 
@@ -58,7 +61,6 @@ public class StasisCollision : MonoBehaviour
 
     private void LaunchObject(Vector3 direction, Vector3 positionToHit, float force)
     {
-        print(force);
         rb.AddForceAtPosition(direction * force, positionToHit);
     }
 
@@ -68,13 +70,21 @@ public class StasisCollision : MonoBehaviour
 
         isInStasis = true;
 
+        meshRenderer.material = emissiveMaterial;
+
+        chainParticles.Play();
+
         yield return new WaitForSeconds(stasisTime);
 
         isInStasis = false;
 
         rb.isKinematic = false;
 
-        material.SetFloat("_PowerAmount", 0);
+        Destroy(directionIndicator.gameObject);
+
+        meshRenderer.material = baseMaterial;
+
+        emissiveMaterial.SetFloat("_PowerAmount", 0);
 
         float finalLaunchForce = baseLaunchForce * potentialLaunchForce;
 
