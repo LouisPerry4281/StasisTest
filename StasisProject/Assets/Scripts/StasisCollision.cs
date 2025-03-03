@@ -13,6 +13,7 @@ public class StasisCollision : MonoBehaviour
 
     [SerializeField] private ParticleSystem chainParticles;
     [SerializeField] private ParticleSystem energyAbsorbParticles;
+    [SerializeField] private GameObject chainBrokenParticle;
 
     Vector3 directionToLaunch;
     Vector3 stasisPositionHit;
@@ -88,6 +89,10 @@ public class StasisCollision : MonoBehaviour
         meshRenderer.material = baseMaterial;
 
         emissiveMaterial.SetFloat("_PowerAmount", 0);
+
+        ParticleSystem chainBrokenInstance = Instantiate(chainBrokenParticle, transform.position, quaternion.identity).GetComponent<ParticleSystem>();
+        chainBrokenInstance.Play();
+        Destroy(chainBrokenInstance, 3);
 
         float finalLaunchForce = baseLaunchForce * potentialLaunchForce;
 

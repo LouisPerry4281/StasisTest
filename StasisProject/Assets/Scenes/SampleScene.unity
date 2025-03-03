@@ -10740,6 +10740,7 @@ MonoBehaviour:
   stasisTime: 10
   chainParticles: {fileID: 1073069709}
   energyAbsorbParticles: {fileID: 1164174428}
+  chainBrokenParticle: {fileID: 7304066177943915085, guid: cca77ec94df4c4d7495fe91080152e94, type: 3}
   isInStasis: 0
   emissiveMaterial: {fileID: 2100000, guid: b77b0af18858c48b7a989e8a59797612, type: 2}
   baseMaterial: {fileID: 2100000, guid: 80a3d82d36a0c42f4a48bd6b6ab58512, type: 2}
